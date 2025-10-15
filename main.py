@@ -31,7 +31,9 @@ def main():
 
         engine.handle_input()
         engine.update(SCREEN, events)
-        engine.render(SCREEN)
+        
+        if not engine.in_main_menu:
+            engine.render(SCREEN)
 
         pygame.display.flip()
         clock.tick(FPS)
