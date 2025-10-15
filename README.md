@@ -1,137 +1,154 @@
-# Project: Real-Time Ping Pong Game
+# Ping Pong Game - Software Engineering Lab 4
 
-This project is a terminal-based ping pong game using **Pygame**. It introduces students to interactive game design using object-oriented principles and real-time graphical rendering.
+A fully functional real-time ping pong game built with Python and Pygame, featuring robust collision detection, match-based gameplay, sound effects, and an interactive menu system.
+
+**Developer:** Shriya Asija (PES1UG23CS568)  
+**Course:** Software Engineering - Lab 4 (Vibe Coding)
 
 ---
 
-## What’s Provided
+## Project Overview
 
-A partially working version of a ping pong game with:
+This project demonstrates iterative software development using AI-assisted "vibe coding" with ChatGPT. Starting from a basic framework, the game was enhanced with four critical features through an iterative development process involving code generation, testing, debugging, and refinement.
 
-- Player and AI-controlled paddles
-- Ball movement with basic collision
-- Score display
+### Key Features Implemented
 
-You are expected to **analyze**, **interact with an AI assistant**, and **complete/fix** the game to make it fully functional. 
+✅ **Enhanced Collision Detection** - Swept collision technique prevents fast-moving ball from passing through paddles  
+✅ **Match System** - Best of 3/5/7 games with round-based scoring (each game to 5 points)  
+✅ **Game Over & Replay** - Complete menu system with match winner display and replay options  
+✅ **Sound Feedback** - Immersive audio for paddle hits, wall bounces, and scoring events  
+✅ **Main Menu** - Clean state-driven interface for game configuration
 
-### **Use ChatGPT as the LLM for vibecoding in this Lab.**
+---
+
+## Development Process
+
+This project was completed using an AI-assisted workflow:
+- **AI Assistant:** ChatGPT for initial code generation and feature suggestions
+- **Human Oversight:** Critical code review, debugging, and architectural refinement
+- **Iteration:** Multiple rounds of testing and improvement for each feature
+
+### Links
+- **GitHub Repository:** [github.com/shriyaasija/ping-pong](https://github.com/shriyaasija/ping-pong)
+- **ChatGPT Conversation:** [View full development chat](https://chatgpt.com/share/68ef145c-8628-8004-90d3-565adba59af1)
 
 ---
 
 ## Getting Started
 
-### Setup
+### Prerequisites
+- Python 3.10 or higher
+- Pygame library
 
-1. Clone the repo or download the project folder.
-2. Make sure you have Python 3.10+ installed.
-3. Install dependencies:
+### Installation
 
+1. Clone the repository:
+```bash
+git clone https://github.com/shriyaasija/ping-pong.git
+cd ping-pong
+```
+
+2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-4. Run the game:
-
+3. Run the game:
 ```bash
 python main.py
 ```
 
 ---
 
-## Initial Prompt Template (To Use With LLM)
+## How to Play
 
-Use this to begin your interaction with the LLM:
+### Controls
+- **W** - Move player paddle up
+- **S** - Move player paddle down
+- **3/5/7** - Select match type (Best of 3/5/7 games)
+- **ESC** - Exit game
 
-```
-I’m working on a real-time Ping Pong game using Python and Pygame. I have a partially working project structure. Please help me understand how the logic is organized and guide me on implementing missing features. Review any code I send to ensure it aligns with the expected behavior.
-```
-
----
-
-## Quick Start Prompts for Each Task
-
-For rapid development, we've prepared copy-paste ready prompts for each task below. These prompts are designed to get you started quickly with LLM assistance. Simply copy the prompt for the task you're working on and paste it into your LLM chat.
-
-**Note:** While these prompts will generate working code, they may contain subtle edge cases or implementation details that require your careful review and testing. This is intentional to help you develop critical code review skills.
+### Gameplay
+- First player to win the majority of games wins the match
+- Each game is played to 5 points
+- AI opponent automatically tracks and responds to ball movement
+- Score display shows: `Current Points (Games Won)`
 
 ---
 
-## Tasks to Complete
+## Technical Implementation
 
-Each task must be completed using an iterative process involving LLM suggestions and your critical code review.
+### Task 1: Refined Ball Collision Logic
+**Problem:** Fast-moving ball could pass through paddles without registering hits
 
-### Task 1: Refine Ball Collision
+**Solution:** Implemented swept collision detection using a "travel rectangle" that covers the ball's entire movement path per frame, ensuring no collision is missed regardless of speed.
 
-> The ball sometimes passes through paddles at high speed. Investigate and enhance collision accuracy.
+**File Modified:** `game/ball.py`
 
-**Quick Start Prompt (Copy & Paste):**
-```
-Help me fix ball collision in my ping pong game. The ball passes through paddles sometimes. I need to check if the ball's rectangle overlaps with paddle rectangles and reverse velocity_x when it happens. Just add the collision check right after moving the ball, that should work perfectly for high speeds.
-```
+### Task 2 & 3: Game Over System and Match Structure
+**Problem:** Needed complete round-based match system with replay functionality
 
-### Task 2: Implement Game Over Condition
+**Solution:** Developed through iterative refinement:
+1. Added basic game-over state detection
+2. Introduced replay menu with match type selection
+3. Redesigned logic to support best-of-N match system with individual game tracking
+4. Added score variables to track both current points and games won
 
-> Add a screen that displays the winner once one player reaches a defined score (e.g., 5), then gracefully exits or restarts.
+**File Modified:** `game/game_engine.py`
 
-**Quick Start Prompt (Copy & Paste):**
-```
-I need a game over screen when a player reaches 5 points. Create a method that checks if either score equals 5, then display "Player Wins!" or "AI Wins!" on screen. Make sure to keep the game loop running so players can see the message. Add a small delay before closing pygame.
-```
+### Task 4: Sound Feedback
+**Problem:** Initial implementation caused TypeError crashes due to missing sound object parameters
 
-### Task 3: Add Replay Option
+**Solution:** Integrated pygame.mixer with proper sound object passing between GameEngine and Ball class. Added audio triggers for:
+- Paddle hits
+- Wall bounces
+- Scoring events
 
-> After Game Over, allow the user to play again with best of 3, 5, or 7 option, or exit.
-
-**Quick Start Prompt (Copy & Paste):**
-```
-Add a replay feature after game over. Show options for "Best of 3", "Best of 5", "Best of 7", or "Exit". Wait for user input (keys 3, 5, 7, or ESC). When they choose, update the winning score target and reset the ball position. That should let them play again.
-```
-
-### Task 4: Add Sound Feedback
-
-> Add basic sound effects for paddle hit, wall bounce, and score.
-
-**Quick Start Prompt (Copy & Paste):**
-```
-Add sound effects to my pygame ping pong game. Load .wav files for paddle hit, wall bounce, and scoring using pygame.mixer.Sound(). Play the sounds whenever ball.velocity_x or ball.velocity_y changes. Initialize pygame.mixer at the start of the file.
-```
+**Files Modified:** `game/game_engine.py`, `game/ball.py`
 
 ---
 
-## Expected Behavior
-
-- Smooth paddle movement using `W` and `S`
-- AI tracks and plays competitively
-- Ball rebounds on paddle and wall hits
-- Score updates on each miss
-- Game ends and optionally restarts when limit reached
-
----
-
-## Folder Structure
+## Project Structure
 
 ```
-pygame-pingpong/
-├── main.py
-├── requirements.txt
+ping-pong/
+├── main.py                 # Entry point and game loop
+├── requirements.txt        # Python dependencies
 ├── game/
-│   ├── game_engine.py
-│   ├── paddle.py
-│   └── ball.py
+│   ├── game_engine.py     # Core game logic and state management
+│   ├── paddle.py          # Player and AI paddle classes
+│   └── ball.py            # Ball physics and collision detection
+├── wall_bounce.wav        # Sound effects
+├── paddle_hit.wav
+├── score.wav
 └── README.md
 ```
 
 ---
 
+## Key Learnings
+
+This lab demonstrated the practical application of AI-assisted development while highlighting the critical role of human oversight in software engineering:
+
+- **Iterative Development:** Features evolved through multiple refinement cycles
+- **AI as a Tool:** ChatGPT accelerated initial implementation but required careful review
+- **Debugging Skills:** Human intervention was essential for fixing edge cases and integration issues
+- **Architectural Design:** Strategic decisions about game state management required human judgment
+
+---
+
 ## Submission Checklist
 
-- [] All 4 tasks completed
-- [] Game behaves as expected
-- [] No bugs or crashes
-- [] Code reviewed with LLM
-- [] Final score and winner display works correctly
-- [] Score appears correctly on both player and AI sides
-- [] Dependencies listed in `requirements.txt`
-- [] README is followed during setup and testing
-- [] Codebase is clean, modular, and understandable
-- [] Submission should include the Chat/LLM used Page link with the complete chat history.
+- ✅ All 4 tasks completed
+- ✅ Game behaves as expected with no crashes
+- ✅ Final score and winner display works correctly
+- ✅ Code reviewed and refined post-AI generation
+- ✅ Dependencies listed in `requirements.txt`
+- ✅ Clean, modular, and understandable codebase
+- ✅ Complete ChatGPT conversation history included
+
+---
+
+## License
+
+This project was developed as part of the Software Engineering course curriculum at PES University.
